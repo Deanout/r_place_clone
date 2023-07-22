@@ -1,0 +1,22 @@
+<h1>Rails/place</h1>
+<% if user_signed_in? %>
+  <div data-controller="pixels">
+    <%= link_to "Logout", destroy_user_session_path, data: {turbo_method: :delete} %>
+    <br />
+    <input 
+        id="color" 
+        type="text" 
+        data-pixels-target="color" 
+        data-action="change->pixels#loadColor" 
+    value="<%= current_user.get_last_pixel_color %>">
+    <canvas id="background" 
+        data-pixels-target="background" 
+        style="position:absolute;"></canvas>
+    <canvas id="preview" 
+        data-pixels-target="canvas" 
+        data-action="click->pixels#placePixel mousemove->pixels#mouseMove" 
+      style="position:absolute;"></canvas>
+  </div>
+<% else %>
+  <%= link_to "Login", new_user_session_path %>
+<% end %>
